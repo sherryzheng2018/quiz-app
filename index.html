@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="./assets/style.css">
+
+</head>
+<body>
+    <header>
+        <!-- shows the topic of the quiz -->
+        <h1>Let's Play A Fun Quiz!</h1>
+        <h3 id="topic">Try to answer the following questions within the limited time. <br>Please keep in mind that incorrect answers will penalize your score/time by<strong> 10</strong> seconds!</h3>
+    </header>
+    <main>
+        <section id="quizSection">
+    <!-- css: flex - center - hide -->
+            <button id="start" class="button">Start</button> 
+            <!-- this area contains shuffled questions and answer options-->
+            <section id="questionBox" class="hide left">
+                <!-- quiz questions main body -->
+                <div id="question"></div>
+                <div id="answerBox"></div>
+            </section>
+                <!-- shows the current question result -->
+            <div id="resultBox">
+                <h3 id="questionResult"></h3>
+            </div>
+            
+            
+            <section id="gameResult" class="hide">
+                <h3></h3> <!--header of game results-->
+                <div id="message"></div> <!--deliver the game fianl result-->
+                <div id="scoreForm">
+                    <input id="playerInitial" type="text"> <!--ask player's initial-->
+                    <button id="submitScore">Submit</button>
+                </div>
+            </section>
+            
+            <!-- showing the final score and ask player's initial
+            and ask if want to play again -->
+            <section id="final-score" class="hide">
+                <h2>All done!</h2>
+                <div id="score-box">
+                    <h3>Your final score is 40.</h3>
+                </div>
+                <div id="initial-box">
+                    <h4>Enter your initials here</h4>
+                </div>
+                        
+            </section>
+        </section>
+        
+
+        <!-- this area contains a counting down timer used as final score and
+        a score list shows the highest scores -->
+        <aside>
+            <section>
+                <h2 id="timer"></h2>
+            </section>
+            
+            <section class="score-list">
+                <h2 class="score">Highest scores</h2>
+                <div id="scoreBoard"></div>
+                <button id="clearScore" class="button">Clear Scores</button>
+            </section>
+
+        </aside>
+    </main>
+<script src="./assets/script.js"></script>
+</body>
+</html>
