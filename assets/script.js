@@ -1,8 +1,3 @@
-// TODO: add local storage
-// TODO: update score board
-// TODO: clear score button
-// TODO: css
-
 
 var timerEl = document.getElementById("timer");
 var startBtnEl = document.getElementById("start");
@@ -43,7 +38,7 @@ let questions = [
                 correct: true,
             },
             {
-                answerText: "<javascript",
+                answerText: "<javascript>",
             },
             {
                 answerText: "<js>",
@@ -161,7 +156,7 @@ let questions = [
 // ******************
 
 function startQuiz() {
-    startTimer(1000);
+    startTimer(30);
     // console.log("startQuiz");
     startBtnEl.classList.add("hide");
     renderQuestion();
@@ -187,7 +182,7 @@ function selectAnswer(e) {
         gameContinue();
     } else {
         resultEl.textContent = "Wrong!";
-        countingDown(10);
+        countingDown(5);
     }
 }
 
@@ -203,7 +198,7 @@ function gameContinue() {
         renderQuestion();
     } else { //else means the last question has been answered
         clearInterval(countDownTimer);
-        resultEl.textContent = "";
+        resultEl.textContent = 'play again';
         hideQuestion();
         showResult(true);
     }
@@ -236,7 +231,7 @@ function populateAnswer(answerEntry, index) {
 }
 
 function countingDown(numberOfSeconds) {
-    timerEl.textContent = "Time remaining: " + remaining + "s.";
+    timerEl.textContent = "Time remaining: " + (remaining-1) + "s.";
     if (remaining-numberOfSeconds < 0) {
         remaining = 0;
     } else {

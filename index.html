@@ -11,11 +11,11 @@
 <body>
     <header>
         <!-- shows the topic of the quiz -->
-        <h1>Let's Play A Fun Quiz!</h1>
-        <h3 id="topic">Try to answer the following questions within the limited time. <br>Please keep in mind that incorrect answers will penalize your score/time by<strong> 10</strong> seconds!</h3>
+        <h1>Quzi Time!</h1>
+        <h3 id="topic">Try to answer the following questions within the limited time. <br>Please keep in mind that incorrect answers will penalize your score/time by<strong> 5</strong> seconds!</h3>
     </header>
     <main>
-        <section id="quizSection">
+        <section id="quizSection" class="sectionBox">
     <!-- css: flex - center - hide -->
             <button id="start" class="button">Start</button> 
             <!-- this area contains shuffled questions and answer options-->
@@ -26,7 +26,7 @@
             </section>
                 <!-- shows the current question result -->
             <div id="resultBox">
-                <h3 id="questionResult"></h3>
+                <h3 id="questionResult">&#160;</h3>
             </div>
             
             
@@ -44,7 +44,7 @@
             <section id="final-score" class="hide">
                 <h2>All done!</h2>
                 <div id="score-box">
-                    <h3>Your final score is 40.</h3>
+                    <h3></h3>
                 </div>
                 <div id="initial-box">
                     <h4>Enter your initials here</h4>
@@ -56,17 +56,17 @@
 
         <!-- this area contains a counting down timer used as final score and
         a score list shows the highest scores -->
-        <aside>
-            <section>
+        <aside class="sectionBox">
+            <section id="timerSec">
                 <h2 id="timer"></h2>
             </section>
-            
-            <section class="score-list">
+            <section id="scoreSec">
                 <h2 class="score">Highest scores</h2>
-                <div id="scoreBoard"></div>
+                <ol id="scoreBoard"></ol>
+            </section>
+            <section id="resetSec">
                 <button id="clearScore" class="button">Clear Scores</button>
             </section>
-
         </aside>
     </main>
 <script src="./assets/script.js"></script>

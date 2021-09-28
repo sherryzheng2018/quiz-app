@@ -1,0 +1,150 @@
+/* add css variables */
+:root {
+    --darkblue:#253f5b;
+    --lightblue:#4f728e;
+    --pink:#be8260;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+/* #flexbody{
+    display: flex;
+} */
+main {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--darkblue);  
+}
+
+#quizSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 500px;
+}
+
+aside {
+    width: 30%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#timerSec {
+    height: 15%;
+    width: 100%;
+}
+
+#scoreSec {
+    height: 70%;
+    width: 80%;
+    border: 1px solid white;
+    box-shadow: 2px 8px 18px var(--lightblue);
+    border-radius: 8px;
+    text-align: center;
+}
+
+#resetSec {
+    height: 15%;
+    margin: 15px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sectionBox {
+    box-shadow: 5px 10px 18px var(--lightblue);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.hide {
+    display: none !important;
+}
+
+
+header {
+    width: 100%;
+    text-align: center;
+}
+
+#questionBox {
+    display: block;
+    width:70%;
+    border: 2px solid var(--lightblue);
+    border-radius: 8px;
+    box-shadow: 5px 10px 18px var(--lightblue);
+}
+
+#resultBox {
+    display: block;
+    width:100%;
+    border-radius: 5px;
+    color:var(--darkblue);
+    text-align: center;
+}
+
+
+
+#question {
+    text-align: left;
+    font-size: 24px;
+    color: beige;
+    background-color: var(--darkblue);
+}
+
+/* answer button */
+.btn {
+    background-color: var(--lightblue);
+    border: 1px solid var(--darkblue);
+    color: beige;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+    width: 100%;
+    display: grid;
+}
+
+.btn:not(:last-child) {
+    border-bottom: none;
+}
+
+.btn:hover {
+    background-color: var(--darkblue);
+}
+
+.button {
+    background-color: var(--lightblue);
+    color: beige;
+    border:none;
+    display: inline-block;
+    font-size: 24px;
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 12px;
+}
+
+#scoreForm {
+    display: flex;
+    justify-content: center;
+}
+
+.button:hover {
+    box-shadow: 0 2px 2px 2px var(--darkblue);
+  }
+
+#timer {
+    display: flex;
+    justify-content: center;
+}
