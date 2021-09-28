@@ -1,4 +1,4 @@
-
+// define variable elements
 var timerEl = document.getElementById("timer");
 var startBtnEl = document.getElementById("start");
 var questionEl = document.getElementById("question");
@@ -12,20 +12,23 @@ var scoreBtnEl = document.getElementById("submitScore");
 var scoreBoardEl = document.getElementById("scoreBoard");
 var resetScoreEl = document.getElementById("clearScore");
 
+let resultHeader = document.querySelector("#gameResult h3");
+
 let remaining = 0;
 let countDownTimer;
-let answerLabels = ["A. ", "B. ", "C. ", "D. "];
 let questionIndex = 0;
-
+// read score board data from local storage
 let scoreBdDataLocal = localStorage.getItem("scoreBoardLocal");
+// local var to store data
 let scoreBoardData;
+// initialize score borad data by using local storage
 if (scoreBdDataLocal === null) {
     scoreBoardData = [];
     localStorage.setItem("scoreBoardLocal", JSON.stringify(scoreBoardData));
 } else {
     scoreBoardData = JSON.parse(scoreBdDataLocal);
 }
-
+// initialize questions
 let questions = [
     {
         question: "Inside which HTML element do we put the JavaScript?",
@@ -33,7 +36,7 @@ let questions = [
             {
                 answerText: "<scripting>",
             },
-                {
+            {
                 answerText: "<script>",
                 correct: true,
             },
@@ -119,16 +122,17 @@ let questions = [
     }
 ]
 
+let answerLabels = ["A. ", "B. ", "C. ", "D. "];
 // ******************
 // using function to generate question
 // ******************
 // function newQuestion(question, answerList, correctIndex) {
-//     var returnQuestion = {
-//         question: question,
-//         answers: []
-//     };
-
-//     var answerListObject = [];
+    //     var returnQuestion = {
+        //         question: question,
+        //         answers: []
+        //     };
+        
+        //     var answerListObject = [];
 
 //     answerList.forEach((answerItem, index) =>{
 //         if(index === correctIndex) {
@@ -155,27 +159,46 @@ let questions = [
 //                     0))
 // ******************
 
+// function to start the quiz
 function startQuiz() {
     startTimer(30);
     // console.log("startQuiz");
     startBtnEl.classList.add("hide");
     renderQuestion();
     questionBoxEl.classList.remove("hide");
-    gameResultEl.classList.add("hide");
+    // clear result from last round
+    gameResultEl.classList.add("hide"); 
 }
 
 function renderQuestion() {
     let currentQuestion = questions[questionIndex];
     questionEl.textContent = currentQuestion.question;
+    // clear answer list from last question
     answerEl.innerHTML = '';
+    // call populateAnswer for each answer entry
     currentQuestion.answers.forEach(populateAnswer);
 }
 
-function hideQuestion() {
-    questionBoxEl.classList.add("hide");
+function populateAnswer(answerEntry, index) {
+    // console.log(answerEntry);
+    // console.log(answerLabels[index]);
+    // create answer btns
+    let answerBtn = document.createElement("button");
+    // use answer entry to populate btn text
+    answerBtn.textContent = answerLabels[index] + answerEntry.answerText;
+    // add click function to answer btn
+    answerBtn.addEventListener("click", verifyAnswer);
+    // label the btn with correct answer, using dataset
+    answerBtn.dataset.correct = answerEntry.correct;
+    // add btn class
+    answerBtn.classList.add("answerBtn");
+    answerEl.appendChild(answerBtn);
 }
 
-function selectAnswer(e) {
+// click function for answer btn
+// if result is correct, continue to next question or complete
+// else if result is wrong, decrease 5 seconds as punishment
+function verifyAnswer(e) {
     // console.log(e.target.dataset.correct);
     if (e.target.dataset.correct === "true") {
         resultEl.textContent = "Correct!";
@@ -186,13 +209,20 @@ function selectAnswer(e) {
     }
 }
 
+// add function to hide question box after game done
+function hideQuestion() {
+    questionBoxEl.classList.add("hide");
+}
+
+//1. if there are more questions
+//   then show next question
+//2. if no more questions
+//   then quiz completed
+//   show initial input to submit socre
+//   record score with initial
+//   then update scorecard
 function gameContinue() {
-    //1. if more questions
-        //   show next question
-        //2. if last question
-        //   show initial input
-        //   record score with initial
-        //   update scorecard
+    
     if (questionIndex < questions.length-1) {
         questionIndex++;
         renderQuestion();
@@ -204,10 +234,11 @@ function gameContinue() {
     }
 }
 
-function showResult(success) {
+// display result when quiz is completed, or time is up
+function showResult(allQuestionAnswered) {
     gameResultEl.classList.remove("hide");
-    let resultHeader = document.querySelector("#gameResult h3");
-    if (success) {
+    
+    if (allQuestionAnswered) {
         resultHeader.textContent = "Congratulations! Quiz Completed! You scored " + remaining + " .";
         console.log(resultHeader);
         gameResultScoreFormEl.classList.remove("hide");
@@ -219,17 +250,7 @@ function showResult(success) {
     startBtnEl.classList.remove("hide");
 }
 
-function populateAnswer(answerEntry, index) {
-    // console.log(answerEntry);
-    // console.log(answerLabels[index]);
-    let answerBtn = document.createElement("button");
-    answerBtn.textContent = answerLabels[index] + answerEntry.answerText;
-    answerBtn.addEventListener("click", selectAnswer);
-    answerBtn.dataset.correct = answerEntry.correct;
-    answerBtn.classList.add("btn");
-    answerEl.appendChild(answerBtn);
-}
-
+// function to keep track of remianing time of the quiz
 function countingDown(numberOfSeconds) {
     timerEl.textContent = "Time remaining: " + (remaining-1) + "s.";
     if (remaining-numberOfSeconds < 0) {
@@ -244,13 +265,7 @@ function countingDown(numberOfSeconds) {
         resultEl.textContent = "";
         hideQuestion();
         showResult(false);
-        // show time up message in main center
-        answerEl.childNodes.forEach(disableBtn);
     }
-}
-
-function disableBtn(e) {
-    e.removeEventListener("click", selectAnswer);
 }
 
 function startTimer(seconds) {
@@ -261,23 +276,26 @@ function startTimer(seconds) {
    , 1000);
 }
 
-
-startBtnEl.addEventListener("click", startQuiz)
-
 function submitScore(e) {
     // console.log(playerInitialInputEl.value);
     let currentScore = {
         initial: playerInitialInputEl.value,
         score: remaining,
     };
+    // clear previous score board
     scoreBoardEl.innerHTML = "";
+    // add current score to the score board data
     scoreBoardData.push(currentScore);
+    // update score board data to local storage
     localStorage.setItem("scoreBoardLocal", JSON.stringify(scoreBoardData));
+    // sort score data from high to low 
     scoreBoardData = scoreBoardData.sort(compare);
     scoreBoardData.forEach(renderScore);
+    // hide score submission form 
     gameResultScoreFormEl.classList.add("hide");
 }
 
+// custom compare function for sorting 
 function compare( a, b ) {
     if ( a.score < b.score ){
       return 1;
@@ -288,6 +306,7 @@ function compare( a, b ) {
     return 0;
   }
 
+//function to render score board
 function renderScore(score, index) {
     // console.log(score.initial);
     // console.log(score.score);
@@ -297,17 +316,14 @@ function renderScore(score, index) {
     scoreBoardEl.appendChild(scoreEntry);
 }
 
-scoreBtnEl.addEventListener("click", submitScore);
-
-scoreBoardData = scoreBoardData.sort(compare);
-scoreBoardData.forEach(renderScore);
-
-
-
 function resetScore() {
     localStorage.clear();
     scoreBoardEl.innerHTML = "";
     scoreBoardData = [];
 }
 
+startBtnEl.addEventListener("click", startQuiz)
+scoreBtnEl.addEventListener("click", submitScore);
 resetScoreEl.addEventListener("click", resetScore);
+scoreBoardData = scoreBoardData.sort(compare);
+scoreBoardData.forEach(renderScore);

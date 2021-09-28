@@ -104,7 +104,7 @@ header {
 }
 
 /* answer button */
-.btn {
+.answerBtn {
     background-color: var(--lightblue);
     border: 1px solid var(--darkblue);
     color: beige;
